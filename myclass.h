@@ -7,11 +7,12 @@
 class myClass
 {
 public:
-  myClass();
+  myClass(std::string,std::string);
   void printMyName();
 
 private:
   std::string myName;
+  std::string myPassion;
 
 };
 
