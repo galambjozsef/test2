@@ -4,6 +4,8 @@
 #include "psemaphore.h"
 #include "iworker.h"
 #include "korgdevice.h"
+#include "korgsink.h"
+
 
 
 
@@ -18,6 +20,8 @@ public:
   pThreadSemaphore* m_MutexCmd;
 
   void executeCmd(std::vector<std::string>);
+
+  void executeKorgCmd(const KorgCmd*);
   void setWorkerName(std::string);
   std::string getWorkerName(void);
 

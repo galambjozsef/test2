@@ -15,6 +15,7 @@ WorkerThread::~WorkerThread()
   delete m_MutexCmd;
 }
 
+
 void WorkerThread::executeCmd(std::vector<std::string> cmds)
 {
   m_MutexCmd->Wait(2000);
@@ -66,6 +67,15 @@ void WorkerThread::executeCmd(std::vector<std::string> cmds)
   m_MutexCmd->Unlock();
 }
 
+
+
+void WorkerThread::executeKorgCmd(const KorgCmd* kC)
+{
+  const KorgCmd* k = kC;
+  std::string type = k->getType();
+  std::cout<< "WorkerThread::executeKorgCmd: "<< type<<std::endl;
+}
+
 void WorkerThread::setWorkerName(std::string wName)
 {
   m_workerName = wName;
@@ -79,12 +89,15 @@ std::string WorkerThread::getWorkerName(void)
 
 void WorkerThread::Main()
 {
-
   this->SetScheduling(20);
   std::cout<<"WorkerThread::Main()";
   std::string prevCmd = "";
+
+  subscribeHandlingFunction(&WorkerThread::executeKorgCmd);
+
   while(!m_stop)
   {
+    this->HandleFirstKorgCmd();
 
 //    if(prevCmd != m_cmd)
 //    {

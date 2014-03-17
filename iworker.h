@@ -4,8 +4,9 @@
 #include <string>
 #include <vector>
 #include "thread.h"
+#include "korgsink.h"
 
-class IWorker: public Thread
+class IWorker: public Thread, public KorgSink
 {
 public:
   IWorker(std::string name):m_workerName(name)

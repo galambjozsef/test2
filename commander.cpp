@@ -62,14 +62,29 @@ void Commander::executeCmd(std::string sentCmds)
       it = workersMap.find(workerName);
       workersMap.erase(it);
   }
+  else if(receivedCmds.at(0) == "list")
+  {
+      std::map<std::string,IWorker*>::iterator it;
+
+      for (it = workersMap.begin();it != workersMap.end();it++)
+      {
+          std::cout<<(*it).first<<std::endl;
+      }
+
+  }
   else
-  {   //Try tor process cmds to the requested worker
+  {   //Try for process cmds to the requested worker
       std::string workerName = receivedCmds.at(0);      
       receivedCmds.erase(receivedCmds.begin());
 
       IWorker* wrkr = GetWorker(workerName);
       if(wrkr != NULL)
-        wrkr->executeCmd(receivedCmds);
+      {
+//        wrkr->executeCmd(receivedCmds);
+
+        wrkr->Notify(new KorgCmd("Test",receivedCmds));
+        //AA wrkr->notifyCmd(receivedCmds);
+       }
       else
         std::cout<<  "Worker named "<<workerName<<" DOES NOT EXIST !!!!";
 

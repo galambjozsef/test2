@@ -1,6 +1,7 @@
 #ifndef UTIL_H
 #define UTIL_H
 
+#include <stdio.h>
 #include <sys/types.h>
 #include <stdlib.h>
 #include <vector>
