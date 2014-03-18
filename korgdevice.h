@@ -16,6 +16,7 @@ public:
   void writeFromFile2KorgDevice(std::string);
   std::string readFromKorgDevice();
   std::string readFromKorgDeviceEx();
+  std::string readFileAndMeasure(std::string path,int bufferSize,int* dim,float* elapsed,float* speed);
 
 private:
   std::string devicePath;

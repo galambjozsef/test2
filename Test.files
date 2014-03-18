@@ -28,3 +28,5 @@ korgsink.cpp
 invoker.h
 invoker.cpp
 checkedcast.h
+dokorgcmd.h
+dokorgcmd.cpp

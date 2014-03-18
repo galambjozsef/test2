@@ -34,7 +34,7 @@ protected:
     T1* downcastedThis = static_cast< T1* >( this ) ;
     TypeSafeInvoker< T1, T2 >* invoker =  new TypeSafeInvoker< T1, T2 >( downcastedThis, f ) ;
 
-    //theInvoker = invoker;
+    theInvoker = invoker;
   }
 
   void CleanupQueue();

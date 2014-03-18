@@ -1,6 +1,7 @@
 #include <iostream>
 #include "utility.h"
 #include "workerthread.h"
+#include "dokorgcmd.h"
 
 
 WorkerThread::WorkerThread(std::string n):IWorker(n)
@@ -71,9 +72,25 @@ void WorkerThread::executeCmd(std::vector<std::string> cmds)
 
 void WorkerThread::executeKorgCmd(const KorgCmd* kC)
 {
-  const KorgCmd* k = kC;
-  std::string type = k->getType();
-  std::cout<< "WorkerThread::executeKorgCmd: "<< type<<std::endl;
+  std::cout<< "WorkerThread::executeKorgCmd: START"<<std::endl;
+  std::string type = kC->getType();
+  std::vector<std::string> args = kC->getArgs();
+  std::cout<< "WorkerThread::executeKorgCmd: CMDTYPE =  "<< type<<std::endl;
+  for(int i = 0;i < args.size();i++)
+    std::cout<< "WorkerThread::executeKorgCmd: ARGS =  "<< args.at(i)<<"("<<i<<")"<<std::endl;
+
+
+  DoKorgCmd* doKgCmd = DoKorgCmd::factory(*kC);
+
+  if(doKgCmd == NULL)
+  {
+      std::cout<<"WorkerThread "<<this->getWorkerName()<<" has been given a nonexistent cmd !!!"<<std::endl;
+      return;
+  }
+  doKgCmd->executeIt();
+
+  delete doKgCmd;
+
 }
 
 void WorkerThread::setWorkerName(std::string wName)
@@ -90,26 +107,15 @@ std::string WorkerThread::getWorkerName(void)
 void WorkerThread::Main()
 {
   this->SetScheduling(20);
-  std::cout<<"WorkerThread::Main()";
-  std::string prevCmd = "";
+//  std::cout<<"WorkerThread::Main()";
+//  std::string prevCmd = "";
 
   subscribeHandlingFunction(&WorkerThread::executeKorgCmd);
 
   while(!m_stop)
   {
-    this->HandleFirstKorgCmd();
-
-//    if(prevCmd != m_cmd)
-//    {
-//        std::cout<<"Worker thread received this new cmd --> "<<m_cmd<<std::endl;
-//        prevCmd = m_cmd;
-//    }
-
-//      std::cout<<"Worker "<<m_workerName<<" is running"<<std::endl;
-
+    HandleFirstKorgCmd();
     Sleep(1000);
-
   }
-
 
 }

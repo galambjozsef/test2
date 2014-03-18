@@ -12,12 +12,13 @@
 class KorgCmd
 {
 public:
+  KorgCmd(){}
   KorgCmd(std::string, std::vector<std::string>);
   virtual ~KorgCmd();
 
   virtual KorgCmd* Clone() const ;
 
-   std::string getType() const
+  std::string getType() const
   {
     return cmdType;
   }

@@ -13,5 +13,6 @@ void Sleep(long milliSec);
 char* itoa(int n, char *buff, int radix);
 std::vector<std::string> parseString(std::string string2Parse,std::string delimiter);
 int fsize(FILE *fp);
+int fsize(int fd);
 
 #endif // THREADUTIL_H

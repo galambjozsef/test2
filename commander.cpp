@@ -80,11 +80,15 @@ void Commander::executeCmd(std::string sentCmds)
       IWorker* wrkr = GetWorker(workerName);
       if(wrkr != NULL)
       {
-//        wrkr->executeCmd(receivedCmds);
-
-        wrkr->Notify(new KorgCmd("Test",receivedCmds));
-        //AA wrkr->notifyCmd(receivedCmds);
-       }
+        if(receivedCmds.empty())
+        {
+            std::cout<<  "Worker named "<<workerName<<" DID NOT RECEIVE ANY CMDS !!!!"<<std::endl;
+            return;
+        }
+        std::string cmdType = receivedCmds.at(0);
+        receivedCmds.erase(receivedCmds.begin());
+        wrkr->Notify(new KorgCmd(cmdType,receivedCmds));
+      }
       else
         std::cout<<  "Worker named "<<workerName<<" DOES NOT EXIST !!!!";
 

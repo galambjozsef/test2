@@ -1,9 +1,12 @@
 #include "korgsink.h"
 #include "criticalsectionlock.h"
 
+#include <iostream>
+
 
 KorgSink::KorgSink()
 {
+  theInvoker = NULL;
 }
 
 KorgSink::~KorgSink()
@@ -38,8 +41,11 @@ std::auto_ptr<KorgCmd> KorgSink::GetKorgCmd()
 
 void KorgSink::HandleKorgCmd( const KorgCmd* kC )
 {
-
-  theInvoker->InvokeHandler(kC);
+  std::cout<<"KorgSink::HandleKorgCmd"<<std::endl;
+  if(theInvoker == NULL)
+    std::cout<<"KorgSink::HandleKorgCmd --> theInvoker is NULL !!!!!!!!!! "<<std::endl;
+  else
+    theInvoker->InvokeHandler(kC);
 
 }
 

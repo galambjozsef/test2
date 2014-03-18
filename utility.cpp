@@ -38,13 +38,14 @@ std::vector<std::string> parseString(std::string string2Parse,std::string delimi
 
     while (string2Parse.find(delimiter, 0) != std::string::npos)
     { //does the string has a delimiter in it?
-       size_t  pos = string2Parse.find(delimiter, 0); //store the position of the delimiter
-       temp = string2Parse.substr(0, pos);      //get the token
-       string2Parse.erase(0, pos + 1);          //erase it from the source
-       tokens.push_back(temp);                  //and put it into the array
+      size_t  pos = string2Parse.find(delimiter, 0); //store the position of the delimiter
+      temp = string2Parse.substr(0, pos);      //get the token
+      string2Parse.erase(0, pos + 1);          //erase it from the source
+      tokens.push_back(temp);                  //and put it into the array
     }
 
-    tokens.push_back(string2Parse);             //the last token is all alone
+    if(!string2Parse.empty())
+      tokens.push_back(string2Parse);             //the last token is all alone
     return tokens;
 }
 
@@ -59,3 +60,10 @@ int fsize(FILE *fp)
 }
 
 
+int fsize(int fd)
+{
+  int prev= lseek(fd, 0L, SEEK_CUR);
+  int sz=lseek(fd, 0L, SEEK_END);
+  lseek(fd,prev,SEEK_SET); //go back to where we were
+  return sz;
+}

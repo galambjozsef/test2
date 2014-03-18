@@ -5,6 +5,7 @@
 #include "korgdevice.h"
 #include <string.h>
 #include "utility.h"
+#include "timestamp.h"
 
 #define MAX_SIZE 256
 
@@ -236,6 +237,85 @@ std::string korgDevice::readFromKorgDeviceEx()
   return readString;
 }
 
+
+
+
+std::string korgDevice::readFileAndMeasure(std::string path,int bufferSize,int* dim,float* elapsed,float* speed)
+{
+
+
+  int fd = open((const char*)path.c_str(), O_RDONLY);
+
+
+  if(fd < 0)
+  {
+      std::cout<<"fd = "<<fd<<" Couldn't open "<<path<<std::endl;
+      return "";
+  }
+
+  int size = fsize(fd);
+
+  *dim = size;
+
+  std::cout<<"size = "<<size<<std::endl;
+
+  ssize_t res = bufferSize;
+  ssize_t bRead = 0;
+  std::string readString;
+
+  //char buffer[MAX_SIZE];
+
+  char * buffer;
+  buffer = (char*) malloc (sizeof(char)*bufferSize);
+
+  TimeStamp tmr;
+  int64_t elapsedTime = 0;
+  float speedByte = 0;
+
+
+  do
+  {
+
+      memset(buffer,0,bufferSize);
+
+      ssize_t bytesToRead = bufferSize;
+      lseek ( fd, bRead, bufferSize);
+
+      tmr.SnapShot();
+      res = read(fd,buffer,bytesToRead);
+      elapsedTime += tmr.ElapsedTime();
+      if(res == -1)
+      {
+          printf("error reading !\n");
+          return "";
+      }
+      bRead += res;
+//      std::cout<<"res = "<<res<<" bRead = "<<bRead<<std::endl;
+      if(res > 0)
+      {
+          std::string app(buffer,res);
+          readString += app;
+      }
+
+  }while (res);
+
+//  std::cout<<"Read String  =  "<<readString<<std::endl;
+  std::cout<<"Read String size =  "<<readString.size()<<std::endl;
+
+  std::cout<<"Elapsed Time =  "<<elapsedTime<<std::endl;
+
+  speedByte = (float)size/elapsedTime / (1024*1024)*1000 ;//MBytes/s
+  *speed = speedByte;
+
+  *elapsed = (float)elapsedTime/1000;
+  std::cout<<"Elapsed Time =  "<<*elapsed<<std::endl;
+  std::cout<<"speed =  "<<*speed<<" MB/s"<<std::endl;
+
+  close(fd);
+  free (buffer);
+
+  return readString;
+}
 
 
 

@@ -2,6 +2,7 @@
 #define INVOKER_H
 
 //#include "checkedcast.h"
+#include <iostream>
 
 
 class KorgCmd ;
@@ -27,7 +28,6 @@ public:
   }
   virtual void InvokeHandler( const KorgCmd* kC ) const
   {
-    //const T2* kC2 = checked_cast< const T2* >( kC ) ;
     const T2* kC2 = static_cast< const T2* >( kC ) ;
     (sink->*f)( kC2 ) ;
   }
