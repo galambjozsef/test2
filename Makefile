@@ -15,8 +15,8 @@ PROG_NAME=test
 
 all: test
 
-test: test.o myclass.o utility.o  thread.o iworker.o workerthread.o timestamp.o  psemaphore.o commander.o korgdevice.o korgcmd.o criticalsection.o criticalsectionlock.o korgsink.o invoker.o dokorgcmd.o
-	$(CXX) test.o utility.o myclass.o thread.o iworker.o workerthread.o timestamp.o  psemaphore.o commander.o korgdevice.o korgcmd.o criticalsection.o criticalsectionlock.o korgsink.o invoker.o dokorgcmd.o -D_GNU_SOURCE -o $(BUILD_DIR)$(PROG_NAME) $(CFLAGS) -lpthread
+test: test.o myclass.o utility.o  thread.o iworker.o workerthread.o timestamp.o  psemaphore.o commander.o korgdevice.o korgcmd.o criticalsection.o criticalsectionlock.o korgsink.o invoker.o dokorgcmd.o statistics.o
+	$(CXX) test.o utility.o myclass.o thread.o iworker.o workerthread.o timestamp.o  psemaphore.o commander.o korgdevice.o korgcmd.o criticalsection.o criticalsectionlock.o korgsink.o invoker.o dokorgcmd.o statistics.o -D_GNU_SOURCE -o $(BUILD_DIR)$(PROG_NAME) $(CFLAGS) -lpthread
 
 myclass.o: myclass.cpp
 	$(CXX) -c myclass.cpp -O3 $(CFLAGS) -lpthread -o $@
@@ -62,6 +62,9 @@ invoker.o: invoker.cpp
 
 dokorgcmd.o: dokorgcmd.cpp
 	$(CXX) -c dokorgcmd.cpp -O3 $(CFLAGS) -lpthread -o $@	
+
+statistics.o: statistics.cpp
+	$(CXX) -c statistics.cpp -O3 $(CFLAGS) -lpthread -o $@	
 				
 test.o: test.cpp
 	$(CXX) -c test.cpp -O3 $(CFLAGS) -lpthread -o $@

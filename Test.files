@@ -30,3 +30,5 @@ invoker.cpp
 checkedcast.h
 dokorgcmd.h
 dokorgcmd.cpp
+statistics.h
+statistics.cpp

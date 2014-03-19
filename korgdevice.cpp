@@ -240,10 +240,8 @@ std::string korgDevice::readFromKorgDeviceEx()
 
 
 
-std::string korgDevice::readFileAndMeasure(std::string path,int bufferSize,int* dim,float* elapsed,float* speed)
+std::string korgDevice::readFileAndMeasure(std::string path,int bufferSize,int* dim,double* elapsed,double* speed)
 {
-
-
   int fd = open((const char*)path.c_str(), O_RDONLY);
 
 
@@ -270,12 +268,12 @@ std::string korgDevice::readFileAndMeasure(std::string path,int bufferSize,int* 
 
   TimeStamp tmr;
   int64_t elapsedTime = 0;
-  float speedByte = 0;
+  double speedByte = 0;
 
+  system("sh -c \"sync; echo 3 > /proc/sys/vm/drop_caches\""); //AA:Flush cache!!!!!!!!
 
   do
   {
-
       memset(buffer,0,bufferSize);
 
       ssize_t bytesToRead = bufferSize;
@@ -284,6 +282,8 @@ std::string korgDevice::readFileAndMeasure(std::string path,int bufferSize,int* 
       tmr.SnapShot();
       res = read(fd,buffer,bytesToRead);
       elapsedTime += tmr.ElapsedTime();
+      fsync(fd);
+
       if(res == -1)
       {
           printf("error reading !\n");
@@ -302,13 +302,13 @@ std::string korgDevice::readFileAndMeasure(std::string path,int bufferSize,int* 
 //  std::cout<<"Read String  =  "<<readString<<std::endl;
   std::cout<<"Read String size =  "<<readString.size()<<std::endl;
 
-  std::cout<<"Elapsed Time =  "<<elapsedTime<<std::endl;
 
-  speedByte = (float)size/elapsedTime / (1024*1024)*1000 ;//MBytes/s
-  *speed = speedByte;
+  *elapsed = (double)elapsedTime/1000;
+  *speed = (double)(size/(*elapsed) / (1024*1024)) ;//MBytes/s
 
-  *elapsed = (float)elapsedTime/1000;
-  std::cout<<"Elapsed Time =  "<<*elapsed<<std::endl;
+
+
+  std::cout<<"Elapsed Time =  "<<*elapsed<<"s"<<std::endl;
   std::cout<<"speed =  "<<*speed<<" MB/s"<<std::endl;
 
   close(fd);
