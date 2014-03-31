@@ -4,12 +4,16 @@
 
 #include "myclass.h"
 #include "thread.h"
+#include "proxy.h"
 
 #include "workerthread.h"
 #include "commander.h"
 
 #include <map>
 #include <vector>
+#include "socketserver.h"
+#include "clientconnection.h"
+#include "proxy.h"
  
 int main(int argc, char *argv[]) 
 {
@@ -63,7 +67,9 @@ int main(int argc, char *argv[])
 //    myClass mC2("pippo","nuts");
 //    mC2.printMyName();
 
-
+    Proxy theProxy;
+    theProxy.Init();
+    theProxy.Run(0);
 
     std::string receivedCmd;
 

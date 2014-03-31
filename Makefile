@@ -15,8 +15,8 @@ PROG_NAME=test
 
 all: test
 
-test: test.o myclass.o utility.o  thread.o iworker.o workerthread.o timestamp.o  psemaphore.o commander.o korgdevice.o korgcmd.o criticalsection.o criticalsectionlock.o korgsink.o invoker.o dokorgcmd.o statistics.o
-	$(CXX) test.o utility.o myclass.o thread.o iworker.o workerthread.o timestamp.o  psemaphore.o commander.o korgdevice.o korgcmd.o criticalsection.o criticalsectionlock.o korgsink.o invoker.o dokorgcmd.o statistics.o -D_GNU_SOURCE -o $(BUILD_DIR)$(PROG_NAME) $(CFLAGS) -lpthread
+test: test.o myclass.o utility.o  thread.o iworker.o workerthread.o timestamp.o  psemaphore.o commander.o korgdevice.o korgcmd.o criticalsection.o criticalsectionlock.o korgsink.o invoker.o dokorgcmd.o statistics.o socketclient.o socketserver.o clientconnection.o proxy.o iproxy.o
+	$(CXX) test.o utility.o myclass.o thread.o iworker.o workerthread.o timestamp.o  psemaphore.o commander.o korgdevice.o korgcmd.o criticalsection.o criticalsectionlock.o korgsink.o invoker.o dokorgcmd.o statistics.o socketclient.o socketserver.o clientconnection.o proxy.o iproxy.o -D_GNU_SOURCE -o $(BUILD_DIR)$(PROG_NAME) $(CFLAGS) -lpthread
 
 myclass.o: myclass.cpp
 	$(CXX) -c myclass.cpp -O3 $(CFLAGS) -lpthread -o $@
@@ -65,6 +65,21 @@ dokorgcmd.o: dokorgcmd.cpp
 
 statistics.o: statistics.cpp
 	$(CXX) -c statistics.cpp -O3 $(CFLAGS) -lpthread -o $@	
+	
+socketclient.o: socketclient.cpp
+	$(CXX) -c socketclient.cpp -O3 $(CFLAGS) -lpthread -o $@	
+
+socketserver.o: socketserver.cpp
+	$(CXX) -c socketserver.cpp -O3 $(CFLAGS) -lpthread -o $@	
+
+clientconnection.o: clientconnection.cpp
+	$(CXX) -c clientconnection.cpp -O3 $(CFLAGS) -lpthread -o $@	
+
+proxy.o: proxy.cpp
+	$(CXX) -c proxy.cpp -O3 $(CFLAGS) -lpthread -o $@				
+
+iproxy.o: iproxy.cpp
+	$(CXX) -c iproxy.cpp -O3 $(CFLAGS) -lpthread -o $@		
 				
 test.o: test.cpp
 	$(CXX) -c test.cpp -O3 $(CFLAGS) -lpthread -o $@

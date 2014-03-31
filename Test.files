@@ -32,3 +32,13 @@ dokorgcmd.h
 dokorgcmd.cpp
 statistics.h
 statistics.cpp
+socketclient.cpp
+socketclient.h
+socketserver.h
+socketserver.cpp
+clientconnection.h
+clientconnection.cpp
+proxy.h
+proxy.cpp
+iproxy.h
+iproxy.cpp

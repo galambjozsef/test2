@@ -1,6 +1,7 @@
 #include "utility.h"
 #include <algorithm>
 #include <unistd.h>
+#include <string.h>
 
 void Sleep(long milliSec)
 {
@@ -25,6 +26,36 @@ char* itoa(int n, char *buff, int radix)
 }
 
 
+bool InsensitiveSearch(const std::string& _source,const std::string& _token)
+{
+	//search case insensitive
+	if(_source.empty())
+		return false;
+	std::string app = toUPPER(_source);
+	std::string app_token = toUPPER(_token);
+	int pos = app.find(app_token.c_str());
+	if(pos != std::string::npos)
+		return true;
+	else
+		return false;
+}
+
+std::string int2string(int const& _i)
+{
+	char buff[65];
+	memset(buff,0,65);
+	itoa( _i, buff, 10 );
+	std::string app(buff);
+	return app;
+}
+
+std::string long2string(long const& _i)
+{
+	char buff[65];
+	itoa( _i, buff, 10 );
+	std::string app(buff);
+	return app;
+}
 
 std::vector<std::string> parseString(std::string string2Parse,std::string delimiter)
 {
@@ -66,4 +97,21 @@ int fsize(int fd)
   int sz=lseek(fd, 0L, SEEK_END);
   lseek(fd,prev,SEEK_SET); //go back to where we were
   return sz;
+}
+
+
+int GetFileDim(const std::string& TarFile,long& filedim)
+{
+
+    FILE *streamin;
+    streamin = fopen(TarFile.c_str(), ("r+b") );
+
+    if( streamin  == NULL )
+            return 1;
+
+    fseek(streamin,SEEK_END,SEEK_END);
+    filedim = ftell(streamin);
+    fclose( streamin );
+
+    return 0;
 }

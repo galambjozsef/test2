@@ -6,6 +6,8 @@
 #include "korgdevice.h"
 #include "korgsink.h"
 
+#include "socketclient.h"
+
 
 
 
@@ -31,6 +33,8 @@ private:
   std::string m_cmd;
   korgDevice m_dev;
   bool m_stop;
+
+//  SocketClient m_client;
 
 };
 
