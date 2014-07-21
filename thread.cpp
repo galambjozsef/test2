@@ -2,6 +2,7 @@
 #include <iostream>
 #include "psemaphore.h"
 #include "utility.h"
+#include "GenericException.h"
 
 Thread::Thread()
 {
@@ -22,6 +23,7 @@ void* Thread::ThreadBoot(void* lpdwParam)
 {
     try
     {   //Per non avere 2 run sullo stesso thread !!!!
+        std::cout<< "ThreadBoot !!!!!!!"<<std::endl;
         Thread* that=(Thread*) lpdwParam;
         char arg[10];
         itoa(syscall( __NR_gettid),arg,10);
@@ -32,10 +34,11 @@ void* Thread::ThreadBoot(void* lpdwParam)
         that->Main();
         that->m_MutexWaitThread->Unlock();
     }
-    catch(...)
-    {
-      std::cout<< "Exception has occured !!!!!!!"<<std::endl;
-    }
+        catch(BaseSignalException& )
+        {
+                std::cout<<"hread::ThreadBoot() Caught !!!!!!!!!!!!!!!!!"<<std::endl;
+                throw;//AA: nel caso che il thread eventualmente intercetti il throw dell' handler del segnale ...
+        }
 }
 
 void Thread::Run(long dwStackSize)
@@ -45,6 +48,7 @@ void Thread::Run(long dwStackSize)
     pthread_attr_setdetachstate(&attr,PTHREAD_CREATE_DETACHED);
 
     pthread_create(&hThread,&attr,ThreadBoot,this);
+    std::cout<<"Thread::Run!!!"<<std::endl;
 }
 
 

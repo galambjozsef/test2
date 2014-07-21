@@ -66,6 +66,12 @@ void Commander::executeCmd(std::string sentCmds)
   {
       std::map<std::string,IWorker*>::iterator it;
 
+      if(workersMap.empty())
+      {
+        std::cout<<"No Workers !!!!!!!!!!!!"<<std::endl;
+        return;
+      }
+
       for (it = workersMap.begin();it != workersMap.end();it++)
       {
           std::cout<<(*it).first<<std::endl;
@@ -77,6 +83,7 @@ void Commander::executeCmd(std::string sentCmds)
       std::string workerName = receivedCmds.at(0);      
       receivedCmds.erase(receivedCmds.begin());
 
+
       IWorker* wrkr = GetWorker(workerName);
       if(wrkr != NULL)
       {
@@ -87,6 +94,7 @@ void Commander::executeCmd(std::string sentCmds)
         }
         std::string cmdType = receivedCmds.at(0);
         receivedCmds.erase(receivedCmds.begin());
+        std::cout<<  "Worker named "<<workerName<<" is going to execute cmd !!!!"<<std::endl;
         wrkr->Notify(new KorgCmd(cmdType,receivedCmds));
       }
       else

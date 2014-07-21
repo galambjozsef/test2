@@ -1,6 +1,7 @@
 #include "dokorgcmd.h"
 #include "korgdevice.h"
 #include "statistics.h"
+#include "dodevmem2.h"
 
 DoKorgCmd::DoKorgCmd(KorgCmd kc) : kC(kc)
 {
@@ -16,6 +17,10 @@ DoKorgCmd *DoKorgCmd::factory(KorgCmd kc)
   else if (kc.getType() == "transfer")
   {
     theDoer = new DoTransfer(kc);
+  }
+  else if (kc.getType() == "mmap")
+  {
+    theDoer = new DoDevMem2(kc);
   }
 
 
@@ -80,4 +85,6 @@ void DoRead::executeIt()
 void DoTransfer::executeIt()
 {
   std::cout<<"DoTransfer has been executed !!!"<<std::endl;
+  int *p = NULL;
+  *p = 1;
 }

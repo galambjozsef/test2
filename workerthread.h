@@ -21,7 +21,7 @@ public:
   virtual ~WorkerThread();
   pThreadSemaphore* m_MutexCmd;
 
-  void executeCmd(std::vector<std::string>);
+//  void executeCmd(std::vector<std::string>);
 
   void executeKorgCmd(const KorgCmd*);
   void setWorkerName(std::string);

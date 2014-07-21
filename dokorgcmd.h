@@ -9,6 +9,7 @@
 
 class DoRead;
 class DoTransfer;
+//class DoDevMem2;
 
 class DoKorgCmd
 {

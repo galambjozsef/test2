@@ -42,3 +42,7 @@ proxy.h
 proxy.cpp
 iproxy.h
 iproxy.cpp
+dodevmem2.h
+dodevmem2.cpp
+SignalException.h
+GenericException.h

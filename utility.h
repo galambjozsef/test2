@@ -28,4 +28,6 @@ static std::string toUPPER(const std::string& s)
 	return temp;
 }
 
+
+
 #endif // THREADUTIL_H

@@ -14,6 +14,7 @@
 #include "socketserver.h"
 #include "clientconnection.h"
 #include "proxy.h"
+#include "SignalException.h"
  
 int main(int argc, char *argv[]) 
 {
@@ -67,9 +68,14 @@ int main(int argc, char *argv[])
 //    myClass mC2("pippo","nuts");
 //    mC2.printMyName();
 
-    Proxy theProxy;
-    theProxy.Init();
-    theProxy.Run(0);
+
+    ExceptionHandler g_objExceptionHandler;
+
+    //AA: Web server !!!!!!!!!!!!!!!!!!!!
+//    Proxy theProxy;
+//    theProxy.Init();
+//    theProxy.Run(0);
+    /////////////////////////////////////
 
     std::string receivedCmd;
 
