@@ -64,7 +64,7 @@ void ClientConnection::Main()
 			{
 				std::cout<<"PERMANENT SOCKET-----> "<<in.c_str()<<std::endl;
 //				m_FlashProxy->ManageFlashCmd(in);
-				m_Proxy->ProcessCommIn(in);
+				m_Proxy->ProcessCommIn(in); //AA: quà dovrebbe avvenire la gestione dei messaggi verso l'esterno !!!!
 			}
 			else
 			{	//Errore nella connessione della Persistent Socket ...
@@ -94,10 +94,9 @@ void ClientConnection::Main()
 					{
 						if(InsensitiveSearch(in,"*PERSISTENT_SOCKET*"))
 						{
-							int mydebug = 0;
+							//AA: a questo punto la connessione è persistente e quì non si torna più!
 							m_isPersistent = true;
-							WriteClnt( err,"*PERSISTENT_SOCKET*");//AA: sicronizzazione con l'applicazione Flash ...
-							//IsActive = true;
+							WriteClnt( err,"*PERSISTENT_SOCKET*");//AA: sicronizzazione con l'applicazione Flash ...							
 						}
 					}
 
@@ -121,12 +120,14 @@ void ClientConnection::Main()
 
 
 }
-
+//AA: Evade eventuale richiesta da FLASH del policy file
+//    Evade richiest di GET
 bool ClientConnection::ProcessMessage(std::string _msg)
 {
 	if(_msg == "<policy-file-request/>")
 	{
-	//AA std::cout<<"Sending policy file"<<std::endl;
+		//AA: richiesta policy file da FLASH
+		//AA std::cout<<"Sending policy file"<<std::endl;
 
 		if(!writeFile("crossdomain.xml",false))
 			std::cout<<"Error Sending policy file!!!!!!!!!!!!!!!1"<<std::endl;
@@ -144,10 +145,10 @@ bool ClientConnection::ProcessMessage(std::string _msg)
 
 		if(InsensitiveSearch(_msg,"service?url="))
 		{
+		    //AA: Never Happens
 		    std::string encoded_addr = _msg.substr(_msg.find("service?url=")+12,offset2-18);
 		    //std::cout<<_msg << std::endl << "ENCODED ADDRESS!!!!!"<<encoded_addr<<std::endl;
-
-            //DoDownloadResource(encoded_addr);
+		  //DoDownloadResource(encoded_addr);
 
 		}
 		else if( writeFileEx(FilePath,true))
@@ -166,9 +167,7 @@ bool ClientConnection::ProcessMessage(std::string _msg)
 	else if(InsensitiveSearch(_msg,"PUT ") && InsensitiveSearch(_msg," HTTP/1.1") )
 	{
 
-
-
-    }
+	}
 
 	else
 	{
@@ -306,8 +305,8 @@ bool ClientConnection::WriteSlotToClnt(std::string& err,const char* ToClient,int
 		Sleep(2);
 	}
 
-//	std::cout<<"WriteSlotToClnt res --->"<<res<<std::endl;
-//	std::cout<<int2string(m_Socket).c_str()<<std::endl;
+	std::cout<<"WriteSlotToClnt res --->"<<res<<std::endl;
+	std::cout<<int2string(m_Socket).c_str()<<std::endl;
 
 //	if( m_TheServer->IsError(res,err))
 //	{

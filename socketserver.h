@@ -25,7 +25,7 @@
 #define SOCKET_ERROR -1
 #define	INVALID_SOCKET -1
 
-#define POOL_SIZE 2
+#define POOL_SIZE 6
 #define MAX_CONNECTIONS_NUM 20
 
 class ClientConnection;

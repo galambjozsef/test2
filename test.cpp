@@ -72,9 +72,9 @@ int main(int argc, char *argv[])
     ExceptionHandler g_objExceptionHandler;
 
     //AA: Web server !!!!!!!!!!!!!!!!!!!!
-//    Proxy theProxy;
-//    theProxy.Init();
-//    theProxy.Run(0);
+    Proxy theProxy;
+    theProxy.Init();
+    theProxy.Run(0);
     /////////////////////////////////////
 
     std::string receivedCmd;
