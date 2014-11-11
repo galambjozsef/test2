@@ -11,9 +11,10 @@ public:
   virtual ~korgDevice(){}
 
 
-  void openkorgDevice(std::string);
+  bool openkorgDevice(std::string);
   void writeFromBuffer2KorgDevice(std::string);
   void writeFromFile2KorgDevice(std::string);
+  void closekorgDevice(void);
   std::string readFromKorgDevice();
   std::string readFromKorgDeviceEx();
   std::string readFileAndMeasure(std::string path,int bufferSize,int* dim,double* elapsed,double* speed);

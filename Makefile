@@ -15,8 +15,8 @@ PROG_NAME=test
 
 all: test
 
-test: test.o myclass.o utility.o  thread.o iworker.o workerthread.o timestamp.o  psemaphore.o commander.o korgdevice.o korgcmd.o criticalsection.o criticalsectionlock.o korgsink.o invoker.o dokorgcmd.o statistics.o socketclient.o socketserver.o clientconnection.o proxy.o iproxy.o dodevmem2.o
-	$(CXX) test.o utility.o myclass.o thread.o iworker.o workerthread.o timestamp.o  psemaphore.o commander.o korgdevice.o korgcmd.o criticalsection.o criticalsectionlock.o korgsink.o invoker.o dokorgcmd.o statistics.o socketclient.o socketserver.o clientconnection.o proxy.o iproxy.o dodevmem2.o  -D_GNU_SOURCE -o $(BUILD_DIR)$(PROG_NAME) $(CFLAGS) -lpthread -rdynamic
+test: test.o myclass.o utility.o  thread.o iworker.o workerthread.o timestamp.o  psemaphore.o commander.o korgdevice.o korgcmd.o criticalsection.o criticalsectionlock.o korgsink.o invoker.o dokorgcmd.o statistics.o socketclient.o socketserver.o clientconnection.o proxy.o iproxy.o dodevmem2.o docpuload.o
+	$(CXX) test.o utility.o myclass.o thread.o iworker.o workerthread.o timestamp.o  psemaphore.o commander.o korgdevice.o korgcmd.o criticalsection.o criticalsectionlock.o korgsink.o invoker.o dokorgcmd.o statistics.o socketclient.o socketserver.o clientconnection.o proxy.o iproxy.o dodevmem2.o docpuload.o  -D_GNU_SOURCE -o $(BUILD_DIR)$(PROG_NAME) $(CFLAGS) -lpthread -rdynamic
 
 myclass.o: myclass.cpp
 	$(CXX) -c myclass.cpp -O3 $(CFLAGS) -lpthread -rdynamic -o $@
@@ -84,7 +84,9 @@ iproxy.o: iproxy.cpp
 				
 dodevmem2.o: dodevmem2.cpp
 	$(CXX) -c dodevmem2.cpp -O3 $(CFLAGS) -lpthread -rdynamic -o $@						
-				
+
+docpuload.o:docpuload.cpp
+	$(CXX) -c docpuload.cpp -O3 $(CFLAGS) -lpthread -rdynamic -o $@	
 								
 				
 test.o: test.cpp

@@ -46,3 +46,5 @@ dodevmem2.h
 dodevmem2.cpp
 SignalException.h
 GenericException.h
+docpuload.h
+docpuload.cpp

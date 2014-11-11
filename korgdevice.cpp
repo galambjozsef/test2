@@ -16,7 +16,7 @@ korgDevice::korgDevice(std::string dPath):devicePath(dPath)
 
 
 
-void korgDevice::openkorgDevice(std::string dPath)
+bool korgDevice::openkorgDevice(std::string dPath)
 {
   devicePath = dPath;
 //  int kmem_fd = open((const char*)devicePath.c_str(), O_RDWR);
@@ -25,11 +25,22 @@ void korgDevice::openkorgDevice(std::string dPath)
   {
     std::cout<<"error opening "<<devicePath<<std::endl;
     devicePath = "";
-    return;
+    return false;
   }
   std::cout<<"opened "<<devicePath<<std::endl;
+  return true;
 }
 
+void korgDevice::closekorgDevice(void)
+{
+//  int kmem_fd = open((const char*)devicePath.c_str(), O_RDWR);
+  int res = close(device_fd);
+  if(res < 0)
+  {
+    std::cout<<"error opening "<<devicePath<<std::endl;
+    devicePath = "";
+  }
+}
 void korgDevice::writeFromBuffer2KorgDevice(std::string buffer)
 {
 

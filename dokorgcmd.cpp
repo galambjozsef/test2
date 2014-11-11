@@ -2,6 +2,8 @@
 #include "korgdevice.h"
 #include "statistics.h"
 #include "dodevmem2.h"
+#include "docpuload.h"
+#include "utility.h"
 
 DoKorgCmd::DoKorgCmd(KorgCmd kc) : kC(kc)
 {
@@ -22,6 +24,11 @@ DoKorgCmd *DoKorgCmd::factory(KorgCmd kc)
   {
     theDoer = new DoDevMem2(kc);
   }
+  else if (kc.getType() == "cpuload")
+  {
+    theDoer = new DoCpuLoad(kc);
+  }
+
 
 
 
@@ -85,6 +92,33 @@ void DoRead::executeIt()
 void DoTransfer::executeIt()
 {
   std::cout<<"DoTransfer has been executed !!!"<<std::endl;
-  int *p = NULL;
-  *p = 1;
+//  int *p = NULL;
+//  *p = 1;
+  korgDevice kD;
+  int cnt = 0;
+  std::string pathKorgDevice;
+
+  if(kC.getArgs().size() == 1)
+    pathKorgDevice = kC.getArgs().at(0);
+  else
+    std::cout<<"Wrong number of params to Korg Transfer !!!"<<std::endl;
+
+
+  while(!kD.openkorgDevice(pathKorgDevice))
+  {
+	 Sleep(1000);
+  }
+
+
+
+//  system("bg");
+
+  while(cnt <10)
+  {
+      cnt++;
+//      std::cout<<"DoTransfer is executing !!!"<<std::endl;
+      kD.writeFromBuffer2KorgDevice("Ciao !!!!");
+      Sleep(5000);
+  }
+  kD.closekorgDevice();
 }

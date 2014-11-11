@@ -15,7 +15,8 @@
 #include "clientconnection.h"
 #include "proxy.h"
 #include "SignalException.h"
- 
+
+
 int main(int argc, char *argv[]) 
 {
     printf("hello, world\n");
@@ -71,11 +72,11 @@ int main(int argc, char *argv[])
 
     ExceptionHandler g_objExceptionHandler;
 
-    //AA: Web server !!!!!!!!!!!!!!!!!!!!
-    Proxy theProxy;
-    theProxy.Init();
-    theProxy.Run(0);
-    /////////////////////////////////////
+//    //AA: Web server !!!!!!!!!!!!!!!!!!!!
+//    Proxy theProxy;
+//    theProxy.Init();
+//    theProxy.Run(0);
+//    /////////////////////////////////////
 
     std::string receivedCmd;
 
@@ -83,15 +84,31 @@ int main(int argc, char *argv[])
 
     Commander cmmndr;
 
+    bool enableGetCMD = true;
+
     do
     {
-        std::cout << "Type COMMAND !!!! ";
-        getline (std::cin, receivedCmd);
+        if(enableGetCMD) //AA: se si lancia con "test &" e si digita "bg" non si ha + il possesso della cmdline
+	{		 //    questo si era reso necessario per effettuare prove di carico (con DoCpuLoad) e poter invocare "top"
+			 //    e anche lanciare la prograzzazione del psoc4 con cpu "sotto stress ..."
+            std::cout << "Type COMMAND !!!! ";
+            getline (std::cin, receivedCmd);
+            std::cout << "GOT --> "<<receivedCmd<<std::endl;
 
-        cmmndr.executeCmd(receivedCmd);
-       // wt.setCmd(receivedCmd);
+            if(!(receivedCmd.find("back") == std::string::npos))
+            {
+              enableGetCMD = false;
+              std::cout << "GOING TO BACKGROUND !!!! "<<std::endl;
+            }
+            else
+              cmmndr.executeCmd(receivedCmd);
+
+            }
+
 
     } while(receivedCmd != "q");
+
+
 
 
 

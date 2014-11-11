@@ -52,7 +52,7 @@ void ClientConnection::Main()
 //	ThreadMapMan::InsertThreadInfoOnMap(GetThreadInfo());
 
 
-	this->SetScheduling(50);
+	this->SetScheduling(10);
 	for(;;)
 	{
 		err.clear();

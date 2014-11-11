@@ -108,7 +108,7 @@ std::string WorkerThread::getWorkerName(void)
 
 void WorkerThread::Main()
 {
-//  std::cout<<"WorkerThread "<<this->getWorkerName()<<" has started !!!"<<std::endl;
+  std::cout<<"WorkerThread "<<this->getWorkerName()<<" has started !!!"<<" PID = "<<syscall( __NR_gettid)<<" ID = "<<pthread_self ()<<std::endl;
   this->SetScheduling(20);
 //  std::cout<<"WorkerThread::Main()";
 //  std::string prevCmd = "";

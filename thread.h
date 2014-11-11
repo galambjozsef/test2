@@ -35,7 +35,7 @@ public:
   virtual ~Thread();
   virtual void Run(long);
 
-  virtual bool SetScheduling(int _priority,int _policy = SCHED_RR  /*SCHED_FIFO*/);
+  virtual bool SetScheduling(int _priority,int _policy = SCHED_OTHER /*SCHED_RR */ /*SCHED_FIFO*/);
 //  void GetSchedulingInfo(int& _priority,int& _policy);
 };
 
